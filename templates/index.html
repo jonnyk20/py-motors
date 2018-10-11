@@ -6,15 +6,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href='/static/style.css' />
-  <script src="/static/script.js" defer></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="static/style.css" />
+  <script src="static/script.js" defer></script>
+  <style>
+    button {
+      color: white;
+      background-color: #3b5998;
+      border: solid 1px #3b5998;
+      border-radius: 5px;
+      margin: auto;
+    }
+
+    .section {
+      border: solid 1px #3b5998;
+      margin: 5px;
+      padding: 5px;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Hello World!</h1>
-  <button id="on-button">On</button>
-  <button id="off-button">Off</button>
-
+  <div class="section">
+    <div>DC-1</div>
+    <button id="dc1-forward" class="motor">Forward</button>
+    <button id="dc1-reverse" class="motor">Reverse</button>
+    <button id="dc1-stop" class="motor">Stop</button>
+  </div>
+  <div class="section">
+    <div>Directions</div>
+    <button id="forward" class="direction">forward</button>
+    <button id="reverse" class="direction">reverse</button>
+    <button id="left" class="direction">left</button>
+    <button id="right" class="direction">right</button>
+  </div>
 </body>
 
 </html>

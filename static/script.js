@@ -1,30 +1,37 @@
-const onButton = document.getElementById('on-button');
-const offButton = document.getElementById('off-button');
-const onClick = async () => {
-  const res = await fetch('/test', {
+const motors = document.querySelectorAll('.motor');
+const formatCommand = id => {
+  console.log(id);
+  const [motorId, command] = id.split('-');
+  return {
+    motorId,
+    command
+  };
+};
+
+const toggleMotor = ({ target: { id } }) =>
+  fetch('/toggle', {
     method: 'POST',
-    body: JSON.stringify({ msg: 'Hello again from client' }),
     headers: {
       'Content-Type': 'application/json; charset=utf-8'
-      // "Content-Type": "application/x-www-form-urlencoded",
-    }
+    },
+    body: JSON.stringify(formatCommand(id))
   });
-  console.log('res', res);
-  const text = await res.text();
-  console.log('text:', text);
-};
 
-const turnOn = async () => {
-  const res = await fetch('/on');
-  const text = await res.text();
-  console.log(text);
-};
+motors.forEach(button => {
+  button.addEventListener('click', toggleMotor);
+});
 
-const turnOff = async () => {
-  const res = await fetch('/off');
-  const text = await res.text();
-  console.log(text);
-};
+const move = ({ target: { id } }) =>
+  fetch('/move', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    },
+    body: JSON.stringify({ direction: id })
+  });
 
-onButton.addEventListener('click', turnOn);
-offButton.addEventListener('click', turnOff);
+const directions = document.querySelectorAll('.direction');
+
+directions.forEach(button => {
+  button.addEventListener('click', move);
+});

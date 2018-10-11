@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-
+from motorControl import toggleMotor, moveDirection
 # Remote RPIO
 # from gpiozero import LED
 from time import sleep
@@ -39,23 +39,24 @@ def json():
     return jsonify(dictionary)
 
 
-@app.route('/test', methods=['POST'])
-def test():
-    print("post request received")
+@app.route('/toggle', methods=['POST'])
+def toggle():
+    print("Toggle request received")
     json = request.get_json()
-    print(json)
-    print(json["msg"])
-    return "Hello From Server"
+    toggleMotor(json)
+    return "Toggle request received"
 
-@app.route('/on')
-def on():
-    red.on()
-    return "Successfully turned on"
+@app.route('/move', methods=['POST'])
+def move():
+    print("Move request received")
+    json = request.get_json()
+    moveDirection(json)
+    return "Move request received"
 
-@app.route('/off')
-def off():
-    red.off()
-    return "Successfully turned off"
+#   server.post('/move', (req, res) => {
+#     move(motors, req.body);
+#     res.end('Command Recieved');
+#   });
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
