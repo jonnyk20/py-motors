@@ -13,17 +13,17 @@ motors = {
   "dc4": mh.getMotor(4)
 }
 
-def forward(motorId, speed=255)
+def forward(motorId, speed=255):
   motor = motors[motorId]
   motor.setSpeed(speed)
   motor.run(Adafruit_MotorHAT.FORWARD)
 
-def backward(motorId, speed=255)
+def backward(motorId, speed=255):
   motor = motors[motorId]
   motor.setSpeed(speed)
   motor.run(Adafruit_MotorHAT.BACKWARD)
 
-def stop(motorId)
+def stop(motorId):
   motor = motors[motorId]
   motor.setSpeed(0)
   motor.run(Adafruit_MotorHAT.RELEASE)
