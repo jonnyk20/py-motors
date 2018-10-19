@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from motorControl import toggleMotor, moveDirection
+from motorControl import moveDirection
 
 from time import sleep
 
@@ -18,15 +18,6 @@ def json():
         "Key2": 2
     }
     return jsonify(dictionary)
-
-
-@app.route('/toggle', methods=['POST'])
-def toggle():
-    print("Toggle request received")
-    json = request.get_json()
-
-    toggleMotor(json)
-    return "Toggle request received"
 
 
 @app.route('/move', methods=['POST'])
