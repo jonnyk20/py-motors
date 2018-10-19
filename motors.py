@@ -1,7 +1,8 @@
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import RPi.GPIO as GPIO
- 
-import time import sleep
+GPIO.setmode(GPIO.BOARD)
+
+from time import sleep
 import atexit
 
 # create a default object, no changes to I2C address or frequency
@@ -12,6 +13,23 @@ dcMotors = {
   "dc2": mh.getMotor(2),
   "dc3": mh.getMotor(3),
   "dc4": mh.getMotor(4)
+}
+
+stepperMotor = {
+    "controlPins": [7, 11, 13, 15],
+    "halfStepSequence": [
+        [1, 0, 0, 0],
+        [1, 1, 0, 0],
+        [0, 1, 0, 0],
+        [0, 1, 1, 0],
+        [0, 0, 1, 0],
+        [0, 0, 1, 1],
+        [0, 0, 0, 1],
+        [1, 0, 0, 1]
+    ],
+    "position": 0,
+    "lowerLimit": -5,
+    "upperLimit": 5
 }
 
 movements = {
@@ -32,12 +50,32 @@ def runDC(motorId, time = 1):
   motor.setSpeed(0)
   motor.run(Adafruit_MotorHAT.RELEASE)
 
-def stepper(direction):
-  print(direction)
+def runStepper(direction, rotations=3):
+    sequence = stepperMotor["halfStepSequence"]
+    position = stepperMotor["position"]
+    controlPins = stepperMotor["controlPins"]
+    stepCount = len(sequence)
+    steps = range(stepCount)
+    rotationCount = 0
+    up = (direction == "cw")
+    positionChange = 1 if up else -1
+    if direction == "ccw":
+      steps = list(reversed(steps))
+    while rotationCount < rotations:
+        for step in steps:
+          if ((position >= stepperMotor["upperLimit"] and up) or
+            (position <= stepperMotor["lowerLimit"] and not up)):
+            return
+          for pin in range(4):
+            GPIO.output(controlPins[pin], sequence[step][pin])
+          sleep(0.1)
+        print("1 rotation")
+        stepperMotor["position"] += positionChange
+        rotationCount += 1
 
 motorFunctions = {
   "runDC": runDC,
-  "stepper": stepper
+  "runStepper": runStepper
 }
 
 def move(movement):
@@ -45,29 +83,6 @@ def move(movement):
   motorFunction = motorFunctions[movement[0]]
   directionDetail = movement[1]
   motorFunction(directionDetail)
-
-GPIO.setmode(GPIO.BOARD)
-control_pins = [7,11,13,15]
-for pin in control_pins:
-  GPIO.setup(pin, GPIO.OUT)
-  GPIO.output(pin, 0)
-halfstep_seq = [
-  [1,0,0,0],
-  [1,1,0,0],
-  [0,1,0,0],
-  [0,1,1,0],
-  [0,0,1,0],
-  [0,0,1,1],
-  [0,0,0,1],
-  [1,0,0,1]
-]
-for i in range(512):
-  for halfstep in range(8):
-    for pin in range(4):
-      GPIO.output(control_pins[pin], halfstep_seq[halfstep][pin])
-    time.sleep(0.001)
-GPIO.cleanup()
-
 
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():

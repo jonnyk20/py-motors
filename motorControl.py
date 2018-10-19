@@ -1,10 +1,11 @@
 import os
-isPy = os.environ.get('RASPBERRY_PI', False)
+isPy = os.environ.get('RASPBERRY_PI', 'False')
 
-if (isPy):
+if (isPy == 'True'):
     from motors import move
 else:
     from fakeMotors import move
+
 
 def moveDirection(req, time=1):
     direction = req["direction"]

@@ -26,19 +26,7 @@ dcMotors = {
     "dc4": DCMotor(4)
 }
 
-halfstepSequence = [
-    [1, 0, 0, 0],
-    [1, 1, 0, 0],
-    [0, 1, 0, 0],
-    [0, 1, 1, 0],
-    [0, 0, 1, 0],
-    [0, 0, 1, 1],
-    [0, 0, 0, 1],
-    [1, 0, 0, 1]
-]
-
 stepperMotor = {
-    "controlPins": [7, 11, 13, 15],
     "halfStepSequence": [
         [1, 0, 0, 0],
         [1, 1, 0, 0],
