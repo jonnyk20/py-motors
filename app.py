@@ -10,6 +10,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
 @app.route('/json')
 def json():
     dictionary = {
@@ -23,8 +24,10 @@ def json():
 def toggle():
     print("Toggle request received")
     json = request.get_json()
+
     toggleMotor(json)
     return "Toggle request received"
+
 
 @app.route('/move', methods=['POST'])
 def move():
@@ -33,5 +36,6 @@ def move():
     moveDirection(json)
     return "Move request received"
 
+
 if __name__ == '__main__':
-    app.run(debug=True, port=3000, host='0.0.0.0')
+    app.run(debug=True, port=5000, host='0.0.0.0')
