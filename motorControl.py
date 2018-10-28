@@ -1,5 +1,7 @@
 import os
 isPy = os.environ.get('RASPBERRY_PI', 'False')
+print('isPy:')
+print(isPy)
 
 if (isPy == 'True'):
     from motors import move
