@@ -1,7 +1,7 @@
 import os
 isPy = os.environ.get('RASPBERRY_PI', 'False')
 
-if (isPy == True):
+if (isPy == 'True'):
     from motors import move
 else:
     from fakeMotors import move
