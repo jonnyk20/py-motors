@@ -76,6 +76,8 @@ def runStepper(direction, rotations=3):
       print("position +1")
       stepperMotor["position"] += positionChange
       rotationCount += 1
+    for pin in range(4):
+      GPIO.output(controlPins[pin], 0)
 
 motorFunctions = {
   "runDC": runDC,
