@@ -32,6 +32,10 @@ stepperMotor = {
     "upperLimit": 5
 }
 
+for pin in stepperMotor["control_pins"]:
+  GPIO.setup(pin, GPIO.OUT)
+  GPIO.output(pin, 0)
+
 movements = {
   "forward": ["runDC", "dc1"],
   "backward": ["runDC", "dc2"],
