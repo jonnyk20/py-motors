@@ -72,7 +72,7 @@ def runStepper(direction, rotations=3):
             return
           for pin in range(4):
             GPIO.output(controlPins[pin], sequence[step][pin])
-          sleep(0.1)
+          sleep(0.001)
         print("1 rotation")
         stepperMotor["position"] += positionChange
         rotationCount += 1
