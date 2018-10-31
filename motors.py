@@ -32,7 +32,7 @@ stepperMotor = {
     "upperLimit": 5
 }
 
-for pin in stepperMotor["control_pins"]:
+for pin in stepperMotor["controlPins"]:
   GPIO.setup(pin, GPIO.OUT)
   GPIO.output(pin, 0)
 
