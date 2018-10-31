@@ -28,8 +28,8 @@ stepperMotor = {
         [1, 0, 0, 1]
     ],
     "position": 0,
-    "lowerLimit": -5,
-    "upperLimit": 5
+    "lowerLimit": -99,
+    "upperLimit": 99
 }
 
 for pin in stepperMotor["controlPins"]:
@@ -65,17 +65,19 @@ def runStepper(direction, rotations=3):
     positionChange = 1 if up else -1
     if direction == "ccw":
       steps = list(reversed(steps))
-    while rotationCount < rotations:
-        for step in steps:
-          if ((position >= stepperMotor["upperLimit"] and up) or
-            (position <= stepperMotor["lowerLimit"] and not up)):
-            return
-          for pin in range(4):
-            GPIO.output(controlPins[pin], sequence[step][pin])
-          sleep(0.001)
-        print("1 rotation")
-        stepperMotor["position"] += positionChange
-        rotationCount += 1
+    # while rotationCount < rotations:
+    for i in range(512):
+      print(i)
+      for step in steps:
+        if ((position >= stepperMotor["upperLimit"] and up) or
+          (position <= stepperMotor["lowerLimit"] and not up)):
+          return
+        for pin in range(4):
+          GPIO.output(controlPins[pin], sequence[step][pin])
+        sleep(0.001)
+      print("1 rotation")
+      stepperMotor["position"] += positionChange
+      rotationCount += 1
 
 motorFunctions = {
   "runDC": runDC,
@@ -94,6 +96,6 @@ def turnOffMotors():
 	dcMotors["dc2"].run(Adafruit_MotorHAT.RELEASE)
 	dcMotors["dc3"].run(Adafruit_MotorHAT.RELEASE)
 	dcMotors["dc4"].run(Adafruit_MotorHAT.RELEASE)
- 
+
 atexit.register(turnOffMotors)
 
