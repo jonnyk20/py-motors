@@ -49,6 +49,7 @@ def runDC(motorId, time = 1):
   print("running dc motor")
   motor = dcMotors[motorId]
   motor.setSpeed(255)
+  motor.run(Adafruit_MotorHAT.FORWARD)
   sleep(time)
   print("stopping dc motor")
   motor.setSpeed(0)
