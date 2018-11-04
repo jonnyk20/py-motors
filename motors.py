@@ -15,6 +15,10 @@ dcMotors = {
   "dc4": mh.getMotor(4)
 }
 
+rotationLimit = 99
+rotationSteps = 512
+stepLimit = rotationLimit * rotationSteps
+
 stepperMotor = {
     "controlPins": [7, 11, 13, 15],
     "halfStepSequence": [
@@ -28,8 +32,8 @@ stepperMotor = {
         [1, 0, 0, 1]
     ],
     "position": 0,
-    "lowerLimit": -512 * 3,
-    "upperLimit": 512 * 3
+    "lowerLimit": stepLimit * -1,
+    "upperLimit": stepLimit
 }
 
 for pin in stepperMotor["controlPins"]:
