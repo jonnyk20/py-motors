@@ -17,6 +17,7 @@ dcMotors = {
 
 rotationLimit = 99
 rotationSteps = 512
+stepsPerMovement = rotationSteps / 4
 stepLimit = rotationLimit * rotationSteps
 
 stepperMotor = {
@@ -70,7 +71,7 @@ def runStepper(direction, rotations=3):
     positionChange = 1 if up else -1
     if direction == "ccw":
       steps = list(reversed(steps))
-    for i in range(512):
+    for i in range(stepsPerMovement):
       for step in steps:
         if ((position >= stepperMotor["upperLimit"] and up) or
           (position <= stepperMotor["lowerLimit"] and not up)):
