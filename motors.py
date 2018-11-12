@@ -17,7 +17,7 @@ dcMotors = {
 
 rotationLimit = 99
 rotationSteps = 512
-stepsPerMovement = rotationSteps / 4
+stepsPerMovement = rotationSteps // 4
 stepLimit = rotationLimit * rotationSteps
 
 stepperMotor = {
