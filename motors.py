@@ -44,14 +44,14 @@ for pin in stepperMotor["controlPins"]:
 movements = {
     "forward": ["runDC", "dc1"],
     "backward": ["runDC", "dc2"],
-    "left": ["runDC", "dc3"],
-    "right": ["runDC", "dc4"],
+    "left": ["runDC", "dc4"],
+    "right": ["runDC", "dc3"],
     "down": ["runStepper", "cw"],
     "up": ["runStepper", "ccw"]
 }
 
 
-def runDC(motorId, time=3):
+def runDC(motorId, time=1):
     print("running dc motor")
     motor = dcMotors[motorId]
     motor.setSpeed(255)
@@ -62,7 +62,7 @@ def runDC(motorId, time=3):
     motor.run(Adafruit_MotorHAT.RELEASE)
 
 
-def runStepper(direction, rotations=5):
+def runStepper(direction, rotations=3):
     sequence = stepperMotor["halfStepSequence"]
     position = stepperMotor["position"]
     controlPins = stepperMotor["controlPins"]
