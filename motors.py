@@ -51,7 +51,7 @@ movements = {
 }
 
 
-def runDC(motorId, time=1):
+def runDC(motorId, time=3):
     print("running dc motor")
     motor = dcMotors[motorId]
     motor.setSpeed(255)
