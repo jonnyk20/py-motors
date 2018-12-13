@@ -7,7 +7,7 @@ else:
     from fakeMotors import move
 
 
-def moveDirection(req, time=1):
+def moveDirection(req, 3):
     direction = req["direction"]
     print("Moving: " + direction)
     move(direction)
